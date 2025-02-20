@@ -1,7 +1,7 @@
 {
   "block.yellowsnow.yellow_snow": "Yellow Snow",
   "block.yellowsnow.yellow_snow_block": "Yellow Snow Block",
-  "death.attack.pee": "%1$s was a bit too pissed",
+  "death.attack.pee.message": "%1$s was a bit too pissed",
   "item.yellowsnow.yellow_snowball": "Yellow Snowball",
   "itemGroup.yellowsnow": "Yellow Snow",
   "tooltip.yellowsnow.dont_eat": "Don't eat me!"

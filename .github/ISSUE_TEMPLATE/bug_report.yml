@@ -1,5 +1,5 @@
 name: Bug Report
-description: Report an issue with supported versions of yellow-snow
+description: Report an issue with supported versions of Yellow Snow
 labels: [ bug ]
 body:
   - type: dropdown
@@ -7,29 +7,28 @@ body:
     attributes:
       label: Minecraft version
       options:
-        - 1.16.5
-        - 1.19.2
+        - 1.21.x
     validations:
       required: true
   - type: input
     id: mod-version
     attributes:
       label: Yellow Snow version
-      placeholder: eg. 1.19.2-2.0.0
+      placeholder: eg. 21.1.0
     validations:
       required: true
   - type: input
     id: libx-version
     attributes:
       label: LibX version
-      placeholder: eg. 1.19.2-4.2.5
+      placeholder: eg. 1.21.1-6.0.0
     validations:
       required: true
   - type: input
     id: forge-version
     attributes:
-      label: Forge version
-      placeholder: eg. 43.1.47
+      label: NeoForge version
+      placeholder: eg. 21.1.0
     validations:
       required: true
   - type: input

@@ -7,9 +7,9 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import org.moddingx.libx.annotation.registration.RegisterClass;
 
-@RegisterClass(registry = "BLOCK_REGISTRY")
+@RegisterClass(registry = "BLOCK")
 public class ModBlocks {
 
-    public static final Block yellowSnow = new YellowSnowLayerBlock(Block.Properties.copy(Blocks.SNOW).randomTicks());
-    public static final Block yellowSnowBlock = new YellowSnowBlock(YellowSnow.getInstance(), Block.Properties.copy(Blocks.SNOW_BLOCK).randomTicks());
+    public static final Block yellowSnow = new YellowSnowLayerBlock(Block.Properties.ofFullCopy(Blocks.SNOW).randomTicks());
+    public static final Block yellowSnowBlock = new YellowSnowBlock(YellowSnow.getInstance(), Block.Properties.ofFullCopy(Blocks.SNOW_BLOCK).randomTicks());
 }

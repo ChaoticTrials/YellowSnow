@@ -1,66 +1,66 @@
 package de.melanx.yellowsnow;
 
 import de.melanx.yellowsnow.core.EventHandler;
+import de.melanx.yellowsnow.core.registration.ModEntities;
 import de.melanx.yellowsnow.core.registration.ModItems;
-import net.minecraft.Util;
-import net.minecraft.core.Position;
-import net.minecraft.core.dispenser.AbstractProjectileDispenseBehavior;
-import net.minecraft.world.entity.projectile.Projectile;
-import net.minecraft.world.entity.projectile.Snowball;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
+import de.melanx.yellowsnow.core.registration.YellowTab;
+import de.melanx.yellowsnow.data.*;
+import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.world.level.block.DispenserBlock;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.common.NeoForge;
+import org.moddingx.libx.datagen.DatagenSystem;
 import org.moddingx.libx.mod.ModXRegistration;
-import org.moddingx.libx.registration.RegistrationBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import javax.annotation.Nonnull;
-
-@Mod("yellowsnow")
+@Mod(YellowSnow.MODID)
 public final class YellowSnow extends ModXRegistration {
 
+    public static final String MODID = "yellowsnow";
     private static YellowSnow instance;
+    private final Logger logger = LoggerFactory.getLogger(YellowSnow.class);
+    private final YellowTab creativeTab;
 
     public YellowSnow() {
-        super(new CreativeModeTab("yellowsnow") {
-
-            @Nonnull
-            @Override
-            public ItemStack makeIcon() {
-                return new ItemStack(ModItems.yellowSnowball);
-            }
-        });
         instance = this;
+        this.creativeTab = new YellowTab(this);
 
-        MinecraftForge.EVENT_BUS.register(new EventHandler());
-    }
+        NeoForge.EVENT_BUS.register(new EventHandler());
 
-    @Override
-    protected void initRegistration(RegistrationBuilder builder) {
+        DatagenSystem.create(this, system -> {
+            system.addDataProvider(BlockStates::new);
+            system.addDataProvider(ItemModels::new);
+            system.addDataProvider(RecipesProvider::new);
+            system.addDataProvider(TagsProvider::new);
 
-    }
-
-    @Nonnull
-    public static YellowSnow getInstance() {
-        return instance;
+            system.addRegistryProvider(DamageTypesProvider::new);
+            system.addRegistryProvider(LootTables::new);
+        });
     }
 
     @Override
     protected void setup(FMLCommonSetupEvent event) {
-        DispenserBlock.registerBehavior(ModItems.yellowSnowball, new AbstractProjectileDispenseBehavior() {
-            @Nonnull
-            protected Projectile getProjectile(@Nonnull Level level, @Nonnull Position pos, @Nonnull ItemStack stack) {
-                return Util.make(new Snowball(level, pos.x(), pos.y(), pos.z()), snowball -> snowball.setItem(stack));
-            }
-        });
+        DispenserBlock.registerProjectileBehavior(ModItems.yellowSnowball);
     }
 
     @Override
-    protected void clientSetup(FMLClientSetupEvent fmlClientSetupEvent) {
+    protected void clientSetup(FMLClientSetupEvent event) {
+        EntityRenderers.register(ModEntities.yellowSnowball, ThrownItemRenderer::new);
+    }
 
+    public static YellowSnow getInstance() {
+        return instance;
+    }
+
+    public static YellowTab getCreativeTab() {
+        return instance.creativeTab;
+    }
+
+    public static Logger getLogger() {
+        return instance.logger;
     }
 }

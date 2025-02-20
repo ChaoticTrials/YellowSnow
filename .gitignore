@@ -18,7 +18,10 @@ build
 .gradle
 
 # other
-.cache
 eclipse
-run*
-logs/
+/run*
+/logs
+
+# Files from Forge MDK
+forge*changelog.txt
+/src/generated/resources/.cache

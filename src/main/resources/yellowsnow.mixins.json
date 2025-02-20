@@ -5,7 +5,6 @@
   "package": "de.melanx.yellowsnow.mixin",
   "refmap": "yellowsnow.refmap.json",
   "mixins": [
-    "MixinSnowyDirtBlock",
     "MixinSpreadingSnowyDirtBlock"
   ]
 }
